@@ -1,28 +1,30 @@
 .search {
   margin-bottom: 2rem;
+  position: relative;
 }
 
 .form {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  
-  @media (max-width: 600px) {
-    flex-direction: column;
-  }
+  display: block;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1001; // Чтобы инпут был над оверлеем
 }
 
 .input {
-  flex: 1;
-  padding: 0.75rem 1rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+  z-index: 1001;
   
   &:focus {
     outline: none;
     border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
   }
   
   &:disabled {
@@ -31,59 +33,158 @@
   }
 }
 
-.button {
-  padding: 0.75rem 2rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
-  &:hover:not(:disabled) {
-    background: #0056b3;
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  @media (max-width: 600px) {
-    width: 100%;
-  }
+// Оверлей с блюром
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+// Контейнер для популярных поисков
+.popularContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  margin-top: -2px; // Перекрываем границу инпута
+  animation: slideDown 0.3s ease;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.popularContent {
+  padding: 1.5rem;
+  text-align: left;
 }
 
 .popularTitle {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #666;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
 }
 
 .popularList {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .popularItem {
-  padding: 0.5rem 1rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
   background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 20px;
-  font-size: 0.875rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  text-align: left;
   
   &:hover:not(:disabled) {
     background: #007bff;
     color: white;
     border-color: #007bff;
+    transform: translateX(4px);
   }
   
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+}
+
+// Анимации
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Адаптивность
+@media (max-width: 600px) {
+  .input {
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .popularContent {
+    padding: 1.25rem;
+  }
+  
+  .popularTitle {
+    font-size: 1rem;
+  }
+  
+  .popularItem {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .input {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .popularContent {
+    padding: 1rem;
+  }
+  
+  .popularTitle {
+    font-size: 0.95rem;
+    margin-bottom: 0.875rem;
+  }
+  
+  .popularItem {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+  }
+  
+  .popularContent {
+    padding: 0.75rem;
+  }
+  
+  .popularTitle {
+    font-size: 0.9rem;
+  }
+  
+  .popularItem {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 }

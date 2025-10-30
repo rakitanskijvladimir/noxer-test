@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { productsApi } from '../../shared/api/productsApi'
+import { configureStore } from "@reduxjs/toolkit";
+import { productsApi } from "../../shared/api/productsApi";
 
 export const store = configureStore({
   reducer: {
@@ -7,8 +7,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productsApi.middleware),
-})
+});
 
-// Отключаем автоматический рефетч при фокусе и reconnect
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

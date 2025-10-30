@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
-import { Header } from '../widgets/header/Header'
 import { Footer } from '../widgets/footer/Footer'
 import { MainPage } from '../pages/main/MainPage'
 import { CatalogPage } from '../pages/catalog/CatalogPage'
@@ -15,7 +14,6 @@ const App: React.FC = () => {
     <Provider store={store}>
       <Router>
         <div className="app">
-          <Header />
           <main className="main">
             <Routes>
               <Route path="/" element={<MainPage />} />
